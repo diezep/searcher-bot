@@ -1,4 +1,4 @@
-# learning_discord_bot
+# Searchert Discord Bot
 Bot created to learn new things as a developer.
 
 ## Setup
