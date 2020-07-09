@@ -32,6 +32,7 @@ async def on_ready():
 async def google(ctx, *, search):
     page_name = 'Google'
     url ='https://www.google.com/search?'
+    url_param = 'q'
 
     print(f"Function {page_name} called: \n Search: {search} \n By: {ctx.author}")
     await ctx.send(f'Searching in {page_name} for: {search}...')
@@ -43,7 +44,7 @@ async def google(ctx, *, search):
         color=discord.Color.blue()
     )
 
-    query = parse.urlencode({'q': search})
+    query = parse.urlencode({url_param: search})
     url_query = url + query
 
     user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"
