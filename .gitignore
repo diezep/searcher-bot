@@ -128,6 +128,11 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-
 # Token file
 token.txt
+
+# VSCode 
+.vscode/
+
+# idea
+.idea/
