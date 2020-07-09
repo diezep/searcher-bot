@@ -2,7 +2,7 @@
 Bot created to learn new things as a developer.
 
 ## Instructions
-- Install npm discord.py package
+- Install discord.py pip package
 - Create .env file with DISCORD_TOKEN variable.
 - Run main.py
 
