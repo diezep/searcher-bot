@@ -1,10 +1,10 @@
 # Searcher Discord Bot
 Bot created to learn new things as a developer.
 
-## Setup
-
+## Instructions
+- Install npm discord.py package
 - Create .env file with DISCORD_TOKEN variable.
 - Run main.py
 
 ## Searchers
-- Google [$google]
+- Google [_google]
