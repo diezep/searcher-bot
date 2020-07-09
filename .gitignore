@@ -133,3 +133,6 @@ token.txt
 
 # VSCode 
 .vscode/
+
+# idea
+.idea/
