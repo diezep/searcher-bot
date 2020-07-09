@@ -6,6 +6,9 @@ import datetime
 
 from urllib import parse
 from urllib.request import Request, urlopen
+
+import requests
+
 from bs4 import BeautifulSoup
 
 from dotenv import load_dotenv
@@ -61,6 +64,55 @@ async def google(ctx, *, search):
             embed.add_field(name=tittle, value=f"{description} \n{link}", inline=False)
 
     embed.set_thumbnail(url="https://rotulosmatesanz.com/wp-content/uploads/2017/09/2000px-Google_G_Logo.svg_.png")
+
+    await ctx.send(embed=embed)
+
+@bot.command()
+async def stardewv(ctx, *, search):
+    page_name = 'Stardew Valley Wiki'
+    url = 'https://es.stardewvalleywiki.com/mediawiki/index.php?'
+    url_param = 'search'
+
+    print(f"Function {page_name} called: \n Search: {search} \n By: {ctx.author}")
+    await ctx.send(f'Searching in {page_name} for: {search}...')
+
+    embed = discord.Embed(
+        title       = "Stardew Valley Wiki [Search Bot]",
+        description = f'Search for "{search}".',
+        timestamp   = datetime.datetime.utcnow(),
+        color       = discord.Color.dark_blue(),
+    )
+    
+    query = parse.urlencode({url_param: search})
+
+    url_query  = url + query
+    user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"
+    headers    = {'User-Agent': user_agent}
+
+    res = requests.get(url_query, headers=headers, allow_redirects=True)
+    html_content = res.content
+
+    soup = BeautifulSoup(html_content, 'html.parser')
+    
+    if len(res.history) == 1 :
+        embed.description = f'Page "{search}" found directly.'
+        # TODO: Get page information directly
+        # Burst!
+
+    else :
+        # TODO: Get information separated about each column. UL
+        # results = soup.select('h2 > ')
+        results =  soup.find_all(['span', 'li'], attrs={'class':'mw-headline','class':'mw-search-result-heading'})
+        for result in results :
+            print(result)
+            print(result.parent.next_element)
+
+            # link = result.find("a").attrs['href']
+            # tittle = result.find("h3").text
+            # description = result.find("span", attrs={"class": "st"}).text
+            # embed.add_field(name=tittle, value=f"{description} \n{link}", inline=False)
+
+    embed.set_thumbnail(url="https://stardewvalleywiki.com/mediawiki/skins/Vector/stardewimages/site_logo_sm.png")
 
     await ctx.send(embed=embed)
 
