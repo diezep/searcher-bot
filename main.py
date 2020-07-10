@@ -11,6 +11,10 @@ import requests
 
 from bs4 import BeautifulSoup
 
+from dotenv import load_dotenv
+
+print("-- Initializing variables --")
+load_dotenv()
 
 print("-- Initializing bot --")
 bot = commands.Bot(command_prefix='_')
@@ -127,8 +131,67 @@ async def stardewv(ctx, *, search):
             await ctx.send(embed=embed)
 
 
+@bot.command()
+async def terraria(ctx, *, search):
+    page_name = 'Terraria Wiki'
+    url = 'https://terraria.fandom.com/es/wiki/Especial:Buscar'
+    url_param = 'search'
 
-token = os.environ.get("DISCORD_TOKEN")
+    print(
+        f"Function {page_name} called: \n Search: {search} \n By: {ctx.author} \n Timestamp: {datetime.datetime.now()} ")
+    await ctx.send(f'Searching in {page_name} for: {search}...')
+
+    query = parse.urlencode({url_param: search})
+    url_query = url + "?" + query
+
+    user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"
+    headers = {'User-Agent': user_agent}
+
+    res = requests.get(url_query, headers=headers, allow_redirects=True)
+    html_content = res.content
+
+    soup = BeautifulSoup(html_content, 'html.parser')
+
+    results = soup.find_all('li', attrs={"class": "result"})
+
+    embed = discord.Embed(
+        title=f"{page_name} [Search Bot]",
+        description=f'Page "{search}" found directly.',
+        timestamp=datetime.datetime.utcnow(),
+        color=discord.Color.dark_blue(),
+        url=url_query
+    )
+    embed.set_thumbnail(url="https://i.dlpng.com/static/png/6654190_preview.png")
+
+    for result in results:
+        tittle = result.select_one("h1 > a").text
+        result.find("h1").decompose()
+        print(result.find.article.get_text())
+        details = result.select_one("article").text
+        result_url = result.select_one("ul li a").text
+
+        embed.add_field(name=tittle, value=f"{details} \n{result_url}", inline=False)
+
+    await ctx.send(embed=embed)
+    # if len(res.history) == 1:
+
+    #     embed = discord.Embed(
+    #         title=f"{page_name} [Search Bot]",
+    #         description=f'Page "{search}" found directly.',
+    #         timestamp=datetime.datetime.utcnow(),
+    #         color=discord.Color.dark_blue(),
+    #         url=url_query
+    #     )
+    #     embed.set_thumbnail(url="https://i.dlpng.com/static/png/6654190_preview.png")
+    #     # TODO: Get page information directly
+    #     # Burst!
+
+    # else:
+    # names_results = ["Results by tittle of page.. ", "Results by text in page.. "]
+    # page_results = soup.select("ul.mw-search-results")
+
+
+token = os.getenv("DISCORD_TOKEN")
 bot.run(token)
 
 
