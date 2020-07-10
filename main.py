@@ -11,7 +11,6 @@ import requests
 
 from bs4 import BeautifulSoup
 
-from dotenv import load_dotenv
 
 print("-- Initializing Environment Variables --")
 load_dotenv()
@@ -132,7 +131,7 @@ async def stardewv(ctx, *, search):
 
 
 
-token = os.getenv("DISCORD_TOKEN")
+token = os.environ.get("DISCORD_TOKEN")
 bot.run(token)
 
 
