@@ -12,9 +12,6 @@ import requests
 from bs4 import BeautifulSoup
 
 
-print("-- Initializing Environment Variables --")
-load_dotenv()
-
 print("-- Initializing bot --")
 bot = commands.Bot(command_prefix='_')
 
