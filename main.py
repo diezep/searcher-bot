@@ -70,7 +70,7 @@ async def google(ctx, *, search):
 @bot.command()
 async def stardewv(ctx, *, search):
     page_name = 'Stardew Valley Wiki'
-    url = 'https://es.stardewvalleywiki.com/mediawiki/index.php?'
+    url = 'https://es.stardewvalleywiki.com/'
     url_param = 'search'
 
     print(f"Function {page_name} called: \n Search: {search} \n By: {ctx.author}")
@@ -83,9 +83,12 @@ async def stardewv(ctx, *, search):
         color       = discord.Color.dark_blue(),
     )
     
-    query = parse.urlencode({url_param: search})
-
+    query = parse.urlencode({url_param : search})
     url_query  = url + query
+    embed.url = url_query
+
+    await ctx.send(url_query)
+
     user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"
     headers    = {'User-Agent': user_agent}
 
@@ -94,7 +97,7 @@ async def stardewv(ctx, *, search):
 
     soup = BeautifulSoup(html_content, 'html.parser')
     
-    if len(res.history) == 1 :
+    if len(res.history) == 2 :
         embed.description = f'Page "{search}" found directly.'
         # TODO: Get page information directly
         # Burst!
@@ -102,15 +105,22 @@ async def stardewv(ctx, *, search):
     else :
         # TODO: Get information separated about each column. UL
         # results = soup.select('h2 > ')
-        results =  soup.find_all(['span', 'li'], attrs={'class':'mw-headline','class':'mw-search-result-heading'})
-        for result in results :
-            print(result)
-            print(result.parent.next_element)
 
-            # link = result.find("a").attrs['href']
-            # tittle = result.find("h3").text
-            # description = result.find("span", attrs={"class": "st"}).text
-            # embed.add_field(name=tittle, value=f"{description} \n{link}", inline=False)
+        results = soup.select("span.mw-headline , ul.mw-search-results > li")
+        for result in results :
+            # IS PAGE NAME
+            if result.name == 'span':
+                embed.add_field(name=f"---- {result.text} ----",value="------------------------------------------", inline=False)
+                
+            
+            # IS PAGE
+            if result.name == 'li':
+                tittle = result.select_one("div.mw-search-result-heading > a").text
+                details = result.select_one("div.searchresult").text
+                data = result.select_one("div.mw-search-result-data").text
+                result_url = url + result.select_one("div.mw-search-result-heading > a").attrs['href']
+                
+                embed.add_field(name=tittle, value=f"{details} \n{data} \n{url}", inline=False)
 
     embed.set_thumbnail(url="https://stardewvalleywiki.com/mediawiki/skins/Vector/stardewimages/site_logo_sm.png")
 
