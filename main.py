@@ -11,6 +11,10 @@ import requests
 
 from bs4 import BeautifulSoup
 
+from dotenv import load_dotenv
+
+print("-- Initializing variables --")
+load_dotenv()
 
 print("-- Initializing bot --")
 bot = commands.Bot(command_prefix='_')
@@ -127,7 +131,6 @@ async def stardewv(ctx, *, search):
             await ctx.send(embed=embed)
 
 
-
 @bot.command()
 async def terraria(ctx, *, search):
     page_name = 'Terraria Wiki'
@@ -149,23 +152,28 @@ async def terraria(ctx, *, search):
 
     soup = BeautifulSoup(html_content, 'html.parser')
 
-    results = soup.find_all('li', attrs={"class": "result"})
 
     embed = discord.Embed(
         title=f"{page_name} [Search Bot]",
-        description=f'Page "{search}" found directly.',
+        description=f'Search "{search}" in Terraria Wiki.',
         timestamp=datetime.datetime.utcnow(),
         color=discord.Color.dark_blue(),
         url=url_query
     )
     embed.set_thumbnail(url="https://i.dlpng.com/static/png/6654190_preview.png")
 
+    results = soup.select('ul.Results > li.result')
     for result in results:
+        
         tittle = result.select_one("h1 > a").text
-        result.find("h1").decompose()
-        print(result.find.article.get_text())
-        details = result.select_one("article").text
+        
         result_url = result.select_one("ul li a").text
+        
+        result.h1.decompose()
+        result.ul.decompose()
+        print(result.article.text, end="\n---------------------------")
+        details = result.article.get_text().replace('\n','').replace('\t','')
+        
 
         embed.add_field(name=tittle, value=f"{details} \n{result_url}", inline=False)
 
@@ -186,7 +194,6 @@ async def terraria(ctx, *, search):
     # else:
     # names_results = ["Results by tittle of page.. ", "Results by text in page.. "]
     # page_results = soup.select("ul.mw-search-results")
-
 
 
 token = os.environ.get("DISCORD_TOKEN")
