@@ -128,7 +128,7 @@ async def stardewv(ctx, *, search):
 
                 embed.add_field(name=tittle, value=f"{details} \n{data} \n{result_url}", inline=False)
             i += 1
-            await ctx.send(embed=embed)
+    await ctx.send(embed=embed)
 
 
 @bot.command()
@@ -171,11 +171,11 @@ async def terraria(ctx, *, search):
         
         result.h1.decompose()
         result.ul.decompose()
-        print(result.article.text, end="\n---------------------------")
-        details = result.article.get_text().replace('\n','').replace('\t','')
+        print(result.article.text, end = "\n---------------------------")
+        details = result.article.text.replace('\n','').replace('\t','')
         
 
-        embed.add_field(name=tittle, value=f"{details} \n{result_url}", inline=False)
+        embed.add_field(name = tittle, value = f"{details} \n{result_url}", inline = False)
 
     await ctx.send(embed=embed)
     # if len(res.history) == 1:
@@ -198,5 +198,3 @@ async def terraria(ctx, *, search):
 
 token = os.environ.get("DISCORD_TOKEN")
 bot.run(token)
-
-
