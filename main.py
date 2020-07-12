@@ -15,17 +15,25 @@ from bs4 import BeautifulSoup
 
 from dotenv import load_dotenv
 
+import re
+from unicodedata import normalize
+
+
+
+
 print("-- Initializing variables --")
 load_dotenv()
 
-print("-- Initializing bot --")
-bot = commands.Bot(command_prefix='_')
-
+print("-- Initializing UserAgent --")
 user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"
 headers = {'User-Agent': user_agent}
 
-print_log = lambda pageName, search, author : print(f"Function {pageName} called: \n Search: {search} \n By: {author} \n Timestamp: {datetime.datetime.now()} ")
+print("-- Initializing utils functions --")
+print_log = lambda pageName, search, author : print(f"Function {pageName} called: \n Search: {search} \n By: {author} \n Timestamp: {datetime.datetime.utcnow()} ")
 initial_message = lambda ctx, pageName, search : ctx.send(f'Searching in {pageName} for: {search}...') 
+
+print("-- Initializing bot --")
+bot = commands.Bot(command_prefix='_')
 
 @bot.command()
 async def ping(ctx):
@@ -103,6 +111,8 @@ async def stardewv(ctx, *, search):
         # TODO: Get page information directly
         # Burst!
 
+        await ctx.send(embed=embed)
+
     else:
         names_results = ["Results by tittle of page.. ", "Results by text in page.. "]
         page_results = soup.select("ul.mw-search-results")
@@ -131,7 +141,6 @@ async def stardewv(ctx, *, search):
                 embed.add_field(name=tittle, value=f"{details} \n{data} \n{result_url}", inline=False)
             i += 1
             await ctx.send(embed=embed)
-
 
 @bot.command()
 async def terraria(ctx, *, search):
