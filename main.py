@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import os
 
 import discord
@@ -128,7 +130,7 @@ async def stardewv(ctx, *, search):
 
                 embed.add_field(name=tittle, value=f"{details} \n{data} \n{result_url}", inline=False)
             i += 1
-    await ctx.send(embed=embed)
+            await ctx.send(embed=embed)
 
 
 @bot.command()
@@ -137,8 +139,13 @@ async def terraria(ctx, *, search):
     url = 'https://terraria.fandom.com/es/wiki/Especial:Buscar'
     url_param = 'search'
 
-    print(
-        f"Function {page_name} called: \n Search: {search} \n By: {ctx.author} \n Timestamp: {datetime.datetime.now()} ")
+    size = 0
+
+    def get_size(_size, _str):
+         _size += len(_str)
+         return _size
+
+    print(f"Function {page_name} called: \n Search: {search} \n By: {ctx.author} \n Timestamp: {datetime.datetime.now()}", end='\n' + "-"*20)
     await ctx.send(f'Searching in {page_name} for: {search}...')
 
     query = parse.urlencode({url_param: search})
@@ -152,7 +159,6 @@ async def terraria(ctx, *, search):
 
     soup = BeautifulSoup(html_content, 'html.parser')
 
-
     embed = discord.Embed(
         title=f"{page_name} [Search Bot]",
         description=f'Search "{search}" in Terraria Wiki.',
@@ -162,38 +168,30 @@ async def terraria(ctx, *, search):
     )
     embed.set_thumbnail(url="https://i.dlpng.com/static/png/6654190_preview.png")
 
-    results = soup.select('ul.Results > li.result')
+    results = soup.select('ul.Results > li[class="result"]')
     for result in results:
-        
+        result_data = ''
+
         tittle = result.select_one("h1 > a").text
-        
-        result_url = result.select_one("ul li a").text
-        
+        result_data += tittle
+
+        _url = result.select_one("ul > li > a").attrs["href"]
+        result_data += _url
+
         result.h1.decompose()
         result.ul.decompose()
-        print(result.article.text, end = "\n---------------------------")
-        details = result.article.text.replace('\n','').replace('\t','')
-        
+        details = result.article.get_text().replace('\n', '').replace('\t', '')
+        result_data += details
 
-        embed.add_field(name = tittle, value = f"{details} \n{result_url}", inline = False)
+
+        # Check size of embebed message before add.
+        size = get_size(size, result_data)
+        if size > 5950:
+            break
+
+        embed.add_field(name = tittle, value = f"{details} \n{_url}", inline = False)
 
     await ctx.send(embed=embed)
-    # if len(res.history) == 1:
-
-    #     embed = discord.Embed(
-    #         title=f"{page_name} [Search Bot]",
-    #         description=f'Page "{search}" found directly.',
-    #         timestamp=datetime.datetime.utcnow(),
-    #         color=discord.Color.dark_blue(),
-    #         url=url_query
-    #     )
-    #     embed.set_thumbnail(url="https://i.dlpng.com/static/png/6654190_preview.png")
-    #     # TODO: Get page information directly
-    #     # Burst!
-
-    # else:
-    # names_results = ["Results by tittle of page.. ", "Results by text in page.. "]
-    # page_results = soup.select("ul.mw-search-results")
 
 
 token = os.environ.get("DISCORD_TOKEN")
