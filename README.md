@@ -8,4 +8,5 @@ Bot created to learn new things as a developer.
 
 ## Searchers
 - Google [_google]
-- Stardew Valley [_stardewv]
+- Stardew Valley [_stardewv] [Only search list]
+- Terraria [_terraria] [Only search list]
