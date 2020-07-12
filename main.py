@@ -15,8 +15,21 @@ from bs4 import BeautifulSoup
 
 from dotenv import load_dotenv
 
+import re
+from unicodedata import normalize
+
+
+
 print("-- Initializing variables --")
 load_dotenv()
+
+print("-- Initializing UserAgent --")
+user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"
+headers = {'User-Agent': user_agent}
+
+print("-- Initializing utils functions --")
+print_log = lambda pageName, search, author : print(f"Function {pageName} called: \n Search: {search} \n By: {author} \n Timestamp: {datetime.datetime.utcnow()} ")
+initial_message = lambda ctx, pageName, search : ctx.send(f'Searching in {pageName} for: {search}...') 
 
 print("-- Initializing bot --")
 bot = commands.Bot(command_prefix='_')
@@ -32,18 +45,17 @@ async def on_ready():
     await bot.change_presence(status=discord.Status.idle, activity=game)
     print('-- Bot searcher ready --')
 
-
 @bot.command()
 async def google(ctx, *, search):
     page_name = 'Google'
     url ='https://www.google.com/search?'
     url_param = 'q'
-
-    print(f"Function {page_name} called: \n Search: {search} \n By: {ctx.author}")
-    await ctx.send(f'Searching in {page_name} for: {search}...')
+    
+    initial_message(ctx, page_name, search)
+    print_log(page_name, search, ctx.author)
 
     embed = discord.Embed(
-        title=f"{page_name} [Search Bot]",
+        title=f"{page_name} |[Search Bot]",
         description=f'Search for "{search}".',
         timestamp=datetime.datetime.utcnow(),
         color=discord.Color.blue()
@@ -52,9 +64,7 @@ async def google(ctx, *, search):
     query = parse.urlencode({url_param: search})
     url_query = url + query
 
-    user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"
-    req = Request(url_query, headers={'User-Agent': user_agent})
-    html_content = urlopen(req).read()
+    html_content = requests.get(url_query, headers=headers, allow_redirects=False)
     soup = BeautifulSoup(html_content, 'html.parser')
 
     results = soup.select("div.g > div.rc")
@@ -71,19 +81,16 @@ async def google(ctx, *, search):
 
 @bot.command()
 async def stardewv(ctx, *, search):
+
     page_name = 'Stardew Valley Wiki'
     url = 'https://es.stardewvalleywiki.com'
     url_param = 'search'
 
-    print(f"Function {page_name} called: \n Search: {search} \n By: {ctx.author} \n Timestamp: {datetime.datetime.now()} ")
-    await ctx.send(f'Searching in {page_name} for: {search}...')
-
+    initial_message(ctx, page_name, search)
+    print_log(page_name, search, ctx.author)
 
     query = parse.urlencode({url_param : search})
     url_query = url + "?" + query
-
-    user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"
-    headers    = {'User-Agent': user_agent}
 
     res = requests.get(url_query, headers=headers, allow_redirects=True)
     html_content = res.content
@@ -102,6 +109,8 @@ async def stardewv(ctx, *, search):
         embed.set_thumbnail(url="https://stardewvalleywiki.com/mediawiki/skins/Vector/stardewimages/site_logo_sm.png")
         # TODO: Get page information directly
         # Burst!
+
+        await ctx.send(embed=embed)
 
     else:
         names_results = ["Results by tittle of page.. ", "Results by text in page.. "]
@@ -132,7 +141,6 @@ async def stardewv(ctx, *, search):
             i += 1
             await ctx.send(embed=embed)
 
-
 @bot.command()
 async def terraria(ctx, *, search):
     page_name = 'Terraria Wiki'
@@ -145,14 +153,11 @@ async def terraria(ctx, *, search):
          _size += len(_str)
          return _size
 
-    print(f"Function {page_name} called: \n Search: {search} \n By: {ctx.author} \n Timestamp: {datetime.datetime.now()}", end='\n' + "-"*20)
-    await ctx.send(f'Searching in {page_name} for: {search}...')
+    initial_message(ctx, page_name, search)
+    print_log(page_name, search, ctx.author)
 
     query = parse.urlencode({url_param: search})
     url_query = url + "?" + query
-
-    user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"
-    headers = {'User-Agent': user_agent}
 
     res = requests.get(url_query, headers=headers, allow_redirects=True)
     html_content = res.content
@@ -192,7 +197,6 @@ async def terraria(ctx, *, search):
         embed.add_field(name = tittle, value = f"{details} \n{_url}", inline = False)
 
     await ctx.send(embed=embed)
-
 
 token = os.environ.get("DISCORD_TOKEN")
 bot.run(token)
