@@ -20,7 +20,6 @@ from unicodedata import normalize
 
 
 
-
 print("-- Initializing variables --")
 load_dotenv()
 
