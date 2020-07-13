@@ -6,6 +6,8 @@ import requests
 from bs4 import BeautifulSoup
 from discord.ext import commands
 
+from utils import print_log
+
 
 class Google(commands.Cog):
 
@@ -20,8 +22,9 @@ class Google(commands.Cog):
 
     @commands.command()
     async def google(self, ctx, *, search):
+
         await ctx.send(f'Searching in {self.page_name} for: {search}...')
-        # print_log(page_name, search, ctx.author)
+        print_log(self.page_name, search, ctx.author)
 
         embed = discord.Embed(
             title=f"{self.page_name} [Search Bot]",

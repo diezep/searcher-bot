@@ -1,11 +1,12 @@
+import datetime
+from urllib import parse
+
 import discord
+import requests
+from bs4 import BeautifulSoup
 from discord.ext import commands
 
-from bs4 import BeautifulSoup
-
-import requests
-from urllib import parse
-import datetime
+from utils import print_log
 
 
 class Terraria(commands.Cog):
@@ -19,7 +20,6 @@ class Terraria(commands.Cog):
         self.bot = bot
         self.headers = headers
 
-
     @commands.command()
     async def terraria(self, ctx, *, search):
         size = 0
@@ -29,6 +29,7 @@ class Terraria(commands.Cog):
             return _size
 
         await ctx.send(f'Searching in {self.page_name} for: {search}...')
+        print_log(self.page_name, search, ctx.author)
 
         query = parse.urlencode({self.url_param: search})
         url_query = self.url + "?" + query

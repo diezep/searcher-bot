@@ -6,6 +6,8 @@ import requests
 from bs4 import BeautifulSoup
 from discord.ext import commands
 
+from utils import print_log
+
 
 class StardewValley(commands.Cog):
 
@@ -22,7 +24,7 @@ class StardewValley(commands.Cog):
     async def StardewValley(self, ctx, *, search):
 
         await ctx.send(f'Searching in {self.page_name} for: {search}...')
-        # print_log(page_name, search, ctx.author)
+        print_log(self.page_name, search, ctx.author)
 
         query = parse.urlencode({self.url_param: search})
         url_query = self.url + "?" + query
