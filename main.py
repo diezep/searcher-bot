@@ -7,8 +7,6 @@ from discord.ext import commands
 import datetime
 
 from urllib import parse
-from urllib.request import Request, urlopen
-
 import requests
 
 from bs4 import BeautifulSoup
@@ -29,7 +27,7 @@ headers = {'User-Agent': user_agent}
 
 print("-- Initializing utils functions --")
 print_log = lambda pageName, search, author : print(f"Function {pageName} called: \n Search: {search} \n By: {author} \n Timestamp: {datetime.datetime.utcnow()} ")
-initial_message = lambda ctx, pageName, search : ctx.send(f'Searching in {pageName} for: {search}...') 
+ 
 
 print("-- Initializing bot --")
 bot = commands.Bot(command_prefix='_')
@@ -51,11 +49,11 @@ async def google(ctx, *, search):
     url ='https://www.google.com/search?'
     url_param = 'q'
     
-    initial_message(ctx, page_name, search)
+    await ctx.send(f'Searching in {page_name} for: {search}...')
     print_log(page_name, search, ctx.author)
 
     embed = discord.Embed(
-        title=f"{page_name} |[Search Bot]",
+        title=f"{page_name} [Search Bot]",
         description=f'Search for "{search}".',
         timestamp=datetime.datetime.utcnow(),
         color=discord.Color.blue()
@@ -64,7 +62,8 @@ async def google(ctx, *, search):
     query = parse.urlencode({url_param: search})
     url_query = url + query
 
-    html_content = requests.get(url_query, headers=headers, allow_redirects=False)
+    res = requests.get(url_query, headers=headers, allow_redirects=False)
+    html_content = res.content
     soup = BeautifulSoup(html_content, 'html.parser')
 
     results = soup.select("div.g > div.rc")
@@ -86,7 +85,7 @@ async def stardewv(ctx, *, search):
     url = 'https://es.stardewvalleywiki.com'
     url_param = 'search'
 
-    initial_message(ctx, page_name, search)
+    await ctx.send(f'Searching in {page_name} for: {search}...')
     print_log(page_name, search, ctx.author)
 
     query = parse.urlencode({url_param : search})
@@ -153,7 +152,7 @@ async def terraria(ctx, *, search):
          _size += len(_str)
          return _size
 
-    initial_message(ctx, page_name, search)
+    await ctx.send(f'Searching in {page_name} for: {search}...')
     print_log(page_name, search, ctx.author)
 
     query = parse.urlencode({url_param: search})
