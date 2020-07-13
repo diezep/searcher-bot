@@ -41,13 +41,18 @@ class Google(commands.Cog):
         soup = BeautifulSoup(html_content, 'html.parser')
 
         results = soup.select("div.g > div.rc")
-
+        i = 0
         if len(results) > 0:
             for result in results:
                 link = result.find("a").attrs['href']
                 tittle = result.find("h3").text
                 description = result.find("span", attrs={"class": "st"}).text
                 embed.add_field(name=tittle, value=f"{description} \n{link}", inline=False)
+
+                # Show only first 5 options.
+                i += 1
+                if i == 5:
+                    break
 
         embed.set_thumbnail(url=self.embed_image)
 

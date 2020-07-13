@@ -54,20 +54,19 @@ class StardewValley(commands.Cog):
             names_results = ["Results by tittle of page.. ", "Results by text in page.. "]
             page_results = soup.select("ul.mw-search-results")
 
-            i = 0
-
+            i_page = 0
+            i_res = 0
             for page_result in page_results:
 
                 embed = discord.Embed(
                     title=f"{self.page_name} [Search Bot]",
-                    description=names_results[i],
+                    description=names_results[i_page],
                     timestamp=datetime.datetime.utcnow(),
                     color=discord.Color.dark_blue(),
                     url=url_query,
 
                 )
-                embed.set_thumbnail(
-                    url=self.embed_image)
+                embed.set_thumbnail(url=self.embed_image)
 
                 results = page_result.find_all('li')
                 for result in results:
@@ -76,7 +75,13 @@ class StardewValley(commands.Cog):
                     data = result.select_one("div.mw-search-result-data").text
                     result_url = self.url + result.select_one("div.mw-search-result-heading > a").attrs['href']
 
-                    embed.add_field(name=tittle, value=f"{details} \n{data} \n{result_url}", inline=False)
-                i += 1
+                    embed.add_field(name=tittle, value=f"{details} \n{result_url} \n{data}", inline=False)
+                    i_res += 1
+
+                    # Show only 5 results in both result pages.
+                    if i_res == 5 or i_res == 10:
+                        break
+
+                i_page += 1
 
                 await ctx.send(embed=embed)
