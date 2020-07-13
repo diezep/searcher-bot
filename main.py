@@ -1,21 +1,16 @@
 #!/usr/bin/python3
 
+import datetime
 import os
+from urllib import parse
 
 import discord
-from discord.ext import commands
-import datetime
-
-from urllib import parse
 import requests
-
 from bs4 import BeautifulSoup
-
+from discord.ext import commands
 from dotenv import load_dotenv
 
-import re
-from unicodedata import normalize
-
+from cogs.StardewValley import StardewValley
 from cogs.Terraria import Terraria
 
 print("-- Initializing variables --")
@@ -78,67 +73,8 @@ async def google(ctx, *, search):
 
     await ctx.send(embed=embed)
 
-@bot.command(aliases=['stardew','valley', 'stardewvalley'])
-async def stardewv(ctx, *, search):
-
-    page_name = 'Stardew Valley Wiki'
-    url = 'https://es.stardewvalleywiki.com'
-    url_param = 'search'
-
-    await ctx.send(f'Searching in {page_name} for: {search}...')
-    print_log(page_name, search, ctx.author)
-
-    query = parse.urlencode({url_param : search})
-    url_query = url + "?" + query
-
-    res = requests.get(url_query, headers=headers, allow_redirects=True)
-    html_content = res.content
-
-    soup = BeautifulSoup(html_content, 'html.parser')
-
-    if len(res.history) == 1:
-
-        embed = discord.Embed(
-            title="Stardew Valley Wiki [Search Bot]",
-            description=f'Page "{search}" found directly.',
-            timestamp=datetime.datetime.utcnow(),
-            color=discord.Color.dark_blue(),
-            url=url_query
-        )
-        embed.set_thumbnail(url="https://stardewvalleywiki.com/mediawiki/skins/Vector/stardewimages/site_logo_sm.png")
-        # TODO: Get page information directly
-        # Burst!
-
-        await ctx.send(embed=embed)
-
-    else:
-        names_results = ["Results by tittle of page.. ", "Results by text in page.. "]
-        page_results = soup.select("ul.mw-search-results")
-
-        i = 0
-
-        for page_result in page_results:
-
-            embed = discord.Embed(
-                title       = "Stardew Valley Wiki [Search Bot]",
-                description = names_results[i],
-                timestamp   = datetime.datetime.utcnow(),
-                color       = discord.Color.dark_blue(),
-                url         = url_query,
-
-            )
-            embed.set_thumbnail(url="https://stardewvalleywiki.com/mediawiki/skins/Vector/stardewimages/site_logo_sm.png")
-
-            results = page_result.find_all('li')
-            for result in results:
-                tittle = result.select_one("div.mw-search-result-heading > a").text
-                details = result.select_one("div.searchresult").text.replace('{', '').replace('}', '').replace('[', '').replace(']', '')
-                data = result.select_one("div.mw-search-result-data").text
-                result_url = url + result.select_one("div.mw-search-result-heading > a").attrs['href']
-
-                embed.add_field(name=tittle, value=f"{details} \n{data} \n{result_url}", inline=False)
-            i += 1
-            await ctx.send(embed=embed)
+# Stardew Valley command and functions.
+bot.add_cog(StardewValley(bot, headers))
 
 # Terraria command and functions.
 bot.add_cog(Terraria(bot, headers))
