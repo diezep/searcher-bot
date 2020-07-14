@@ -8,7 +8,6 @@ from discord.ext import commands
 
 from utils.log import print_log
 from utils.webss import WebSS
-from utils.strings import compare_strings
 
 class StardewValley(commands.Cog):
 
