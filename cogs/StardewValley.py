@@ -8,7 +8,7 @@ from discord.ext import commands
 
 from utils.log import print_log
 from utils.webss import WebSS
-
+from utils.strings import compare_strings
 
 class StardewValley(commands.Cog):
 
@@ -36,56 +36,46 @@ class StardewValley(commands.Cog):
 
         soup = BeautifulSoup(html_content, 'html.parser')
 
+        embed = discord.Embed(
+            timestamp=datetime.datetime.utcnow(),
+            color=discord.Color.dark_blue(),
+        )
+        embed.set_thumbnail(url=self.embed_image)
+        embed.set_author(name=f"{self.page_name} [Searcher Bot]",)
+        embed.url = res.url
+
+        image = None
+
+
         if len(res.history) == 1:
-
-            embed = discord.Embed(
-                title=f"{self.page_name}[Search Bot]",
-                description=f'Page "{search}" found directly.',
-                timestamp=datetime.datetime.utcnow(),
-                color=discord.Color.dark_blue(),
-                url=url_query,
-            )
-            embed.set_thumbnail(url=self.embed_image)
-            if len(soup.select('table[id="infoboxtable"]')) > 0:
-                # tittle = soup.select_one('td.infoboxheader').text
+            
+            if len(soup.select('#infoboxborder')) == 1:
                 webss = WebSS(url=res.url)
-                image = webss.ofElement(search, '//*[@id="infoboxborder"]')
+                image = webss.ofElement('//*[@id="infoboxborder"]')
+                embed.set_image(url="attachment://image.png")
                 webss.close()
-
-            await ctx.send(embed=embed, file=image if image is not None else None)
-
+            
+            title = soup.select_one('#firstHeading').text
+            embed.title = title
+       
         else:
-            names_results = ["Results by tittle of page.. ",
-                             "Results by text in page.. "]
+            names_results = ["Results by title of page.. ", "Results by text in page.. "]
             page_results = soup.select("ul.mw-search-results")
 
             i_page = 0
             i_res = 0
             for page_result in page_results:
 
-                embed = discord.Embed(
-                    title=f"{self.page_name} [Search Bot]",
-                    description=names_results[i_page],
-                    timestamp=datetime.datetime.utcnow(),
-                    color=discord.Color.dark_blue(),
-                    url=url_query,
-
-                )
-                embed.set_thumbnail(url=self.embed_image)
+                embed.title = names_results[i_page]
 
                 results = page_result.find_all('li')
                 for result in results:
-                    tittle = result.select_one(
-                        "div.mw-search-result-heading > a").text
-                    details = result.select_one("div.searchresult").text.replace(
-                        '{', '').replace('}', '').replace('[', '').replace(']', '')
+                    title = result.select_one("div.mw-search-result-heading > a").text
+                    details = result.select_one("div.searchresult").text.replace('{', '').replace('}', '').replace('[', '').replace(']', '')
                     data = result.select_one("div.mw-search-result-data").text
-                    result_url = self.url + \
-                        result.select_one(
-                            "div.mw-search-result-heading > a").attrs['href']
+                    result_url = self.url + result.select_one("div.mw-search-result-heading > a").attrs['href']
 
-                    embed.add_field(
-                        name=tittle, value=f"{details} \n{result_url} \n{data}", inline=False)
+                    embed.add_field(name=title, value=f"{details} \n{result_url} \n{data}", inline=False)
                     i_res += 1
 
                     # Show only 5 results in both result pages.
@@ -94,4 +84,4 @@ class StardewValley(commands.Cog):
 
                 i_page += 1
 
-                await ctx.send(embed=embed)
+        await ctx.send(embed=embed, file=image if image is not None else None)
