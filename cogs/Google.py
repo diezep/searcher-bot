@@ -6,7 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 from discord.ext import commands
 
-from utils import print_log
+from utils.log import print_log
 
 
 class Google(commands.Cog):
@@ -49,10 +49,6 @@ class Google(commands.Cog):
                 description = result.find("span", attrs={"class": "st"}).text
                 embed.add_field(name=tittle, value=f"{description} \n{link}", inline=False)
 
-                # Show only first 5 options.
-                i += 1
-                if i == 5:
-                    break
 
         embed.set_thumbnail(url=self.embed_image)
 

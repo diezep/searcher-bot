@@ -6,7 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 from discord.ext import commands
 
-from utils import print_log
+from utils.log import print_log
 
 
 class StardewValley(commands.Cog):
@@ -43,11 +43,9 @@ class StardewValley(commands.Cog):
                 color=discord.Color.dark_blue(),
                 url=url_query
             )
-            embed.set_thumbnail(
-                url="https://stardewvalleywiki.com/mediawiki/skins/Vector/stardewimages/site_logo_sm.png")
+            embed.set_thumbnail(url="https://stardewvalleywiki.com/mediawiki/skins/Vector/stardewimages/site_logo_sm.png")
             # TODO: Get page information directly
             # Burst!
-
             await ctx.send(embed=embed)
 
         else:
