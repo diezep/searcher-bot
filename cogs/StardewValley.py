@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 from discord.ext import commands
 
 from utils.log import print_log
+from utils.webss import WebSS
 
 
 class StardewValley(commands.Cog):
@@ -18,7 +19,7 @@ class StardewValley(commands.Cog):
 
     def __init__(self, bot, headers):
         self.bot = bot
-        self.headers =  headers
+        self.headers = headers
 
     @commands.command(aliases=['stardew', 'valley', 'stardewvalley', 'stardewv'])
     async def StardewValley(self, ctx, *, search):
@@ -29,7 +30,8 @@ class StardewValley(commands.Cog):
         query = parse.urlencode({self.url_param: search})
         url_query = self.url + "?" + query
 
-        res = requests.get(url_query, headers=self.headers, allow_redirects=True)
+        res = requests.get(url_query, headers=self.headers,
+                           allow_redirects=True)
         html_content = res.content
 
         soup = BeautifulSoup(html_content, 'html.parser')
@@ -41,15 +43,20 @@ class StardewValley(commands.Cog):
                 description=f'Page "{search}" found directly.',
                 timestamp=datetime.datetime.utcnow(),
                 color=discord.Color.dark_blue(),
-                url=url_query
+                url=url_query,
             )
-            embed.set_thumbnail(url="https://stardewvalleywiki.com/mediawiki/skins/Vector/stardewimages/site_logo_sm.png")
-            # TODO: Get page information directly
-            # Burst!
-            await ctx.send(embed=embed)
+            embed.set_thumbnail(url=self.embed_image)
+            if len(soup.select('table[id="infoboxtable"]')) > 0:
+                # tittle = soup.select_one('td.infoboxheader').text
+                webss = WebSS(url=res.url)
+                image = webss.ofElement(search, '//*[@id="infoboxborder"]')
+                webss.close()
+
+            await ctx.send(embed=embed, file=image if image is not None else None)
 
         else:
-            names_results = ["Results by tittle of page.. ", "Results by text in page.. "]
+            names_results = ["Results by tittle of page.. ",
+                             "Results by text in page.. "]
             page_results = soup.select("ul.mw-search-results")
 
             i_page = 0
@@ -68,12 +75,17 @@ class StardewValley(commands.Cog):
 
                 results = page_result.find_all('li')
                 for result in results:
-                    tittle = result.select_one("div.mw-search-result-heading > a").text
-                    details = result.select_one("div.searchresult").text.replace('{', '').replace('}', '').replace('[','').replace(']', '')
+                    tittle = result.select_one(
+                        "div.mw-search-result-heading > a").text
+                    details = result.select_one("div.searchresult").text.replace(
+                        '{', '').replace('}', '').replace('[', '').replace(']', '')
                     data = result.select_one("div.mw-search-result-data").text
-                    result_url = self.url + result.select_one("div.mw-search-result-heading > a").attrs['href']
+                    result_url = self.url + \
+                        result.select_one(
+                            "div.mw-search-result-heading > a").attrs['href']
 
-                    embed.add_field(name=tittle, value=f"{details} \n{result_url} \n{data}", inline=False)
+                    embed.add_field(
+                        name=tittle, value=f"{details} \n{result_url} \n{data}", inline=False)
                     i_res += 1
 
                     # Show only 5 results in both result pages.
