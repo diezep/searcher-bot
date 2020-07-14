@@ -6,7 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 from discord.ext import commands
 
-from utils import print_log
+from utils.log import print_log
 
 
 class Terraria(commands.Cog):

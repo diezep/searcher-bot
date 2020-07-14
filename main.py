@@ -29,7 +29,7 @@ async def ping(ctx):
 
 @bot.event
 async def on_ready():
-    game = discord.Game('Buscando la felicidad')
+    game = discord.Game('la vida.')
     await bot.change_presence(status=discord.Status.idle, activity=game)
     print('-- Bot searcher ready --')
 
