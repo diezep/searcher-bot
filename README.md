@@ -1,19 +1,44 @@
 # Searcher Bot
 This bot help you to **search** things in **wikis of games** like Stardew Valley, Terraria or in Google directly from your Discord server.
 
-<!-- 1. [Searchers Working](#-searchers-working)-->
-
-## 🔥 Searchers Working
-- **Google** \[_google]
-- **Stardew Valley** \[_stardew, _valley, _stardewv, _stardewvalley]
-- **Terraria** \[_terraria]
-
-
-
 ## 🧾 Table of Contents 🧾
+
+1. [Usage](#-usage-)
+1. [Example](#-example-)
+1. [Searchers](#-example-)
 1. [Deployment](#-deployment-)
-1. [Setup](#-setup)
-1. [Prerequisites](#-prerequisites)
+1. [Setup](#-setup-)
+1. [Prerequisites](#-prerequisites-)
+
+## 🔥 Usage 🔥
+- **Google** 
+    - \_google (what you want search)
+- **Stardew Valley** 
+    - \_stardew (what you want search) [show 1-5 result] 
+- **Terraria** 
+    - \_terraria (what you want search)
+## 🎈 Example 🎈
+Example discord message:
+
+```
+_google hola munndo
+```
+
+Example response:
+    
+![image](https://user-images.githubusercontent.com/38699812/87507451-0784d900-c633-11ea-89fa-0def9a651c0b.PNG)
+
+## 🔎 Searchers 🔎
+- **Google** 
+    \_google
+- **Stardew Valley** 
+    \_stardew
+    \_valley
+    \_stardewv
+    \_stardewvalley
+- **Terraria** 
+    \_terraria
+
 
 ## 🌟 Deployment 🌟
 To start the Discord bot run:
@@ -21,7 +46,7 @@ To start the Discord bot run:
 python3 main.py
 ```
 
-## 🔨 Setup
+## 🔨 Setup 🔨
 - Using the package manager [pip](https://pip.pypa.io/en/stable/), install necessary packages running the following command:
     ```cmd
     pip install -r requirements.txt
@@ -34,7 +59,7 @@ python3 main.py
   GOOGLE_CHROME_BIN = "(PATH of Google Chrome ['chrome.exe' file])"
     ```
 
-## 💡 Prerequisites
+## 💡 Prerequisites 💡
 - [Python 3.5](https://www.python.org/downloads/) or newer version.
 - [pip](https://pip.pypa.io/en/stable/) package manager.
 - [Google Chrome](https://www.google.com/intl/es_mx/chrome/) installed.
