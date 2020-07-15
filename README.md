@@ -12,11 +12,11 @@ This bot help you to **search** things in **wikis of games** like Stardew Valley
 
 ## 🔥 Usage 🔥
 - **Google** 
-    - \_google (what you want search)
+    - \_google (what you want to search)
 - **Stardew Valley** 
-    - \_stardew (what you want search) [show 1-5 result] 
+    - \_stardew (what you want to search) [show 1-5 result] 
 - **Terraria** 
-    - \_terraria (what you want search)
+    - \_terraria (what you want to search)
 ## 🎈 Example 🎈
 Example **discord message**:
 
