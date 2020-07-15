@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Searcher Bot by diezep</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Searcher Bot</h1>
+      <h2 class="project-tagline"> This bot help you to search things in wikis of games like Stardew Valley, Terraria or in Google directly from your Discord server.</h2>
+      <a href="https://github.com/diezep/searcher-discord-bot" class="btn">View on GitHub</a>
+      <a href="https://github.com/diezep/searcher-discord-bot/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/diezep/searcher-discord-bot/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h2>
+<a id="-table-of-contents-" class="anchor" href="#-table-of-contents-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><g-emoji class="g-emoji" alias="receipt" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f9fe.png">🧾</g-emoji> Table of Contents <g-emoji class="g-emoji" alias="receipt" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f9fe.png">🧾</g-emoji>
+</h2>
+<ol>
+<li><a href="#-searchers-working">Searchers Working</a></li>
+<li><a href="#-deployment-">Deployment</a></li>
+<li><a href="#-setup">Setup</a></li>
+<li><a href="#-prerequisites">Prerequisites</a></li>
+</ol>
+<h2>
+<a id="-searchers-working" class="anchor" href="#-searchers-working" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><g-emoji class="g-emoji" alias="fire" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f525.png">🔥</g-emoji> Searchers Working</h2>
+<ul>
+<li>
+<strong>Google</strong> [_google]</li>
+<li>
+<strong>Stardew Valley</strong> [_stardew, _valley, _stardewv, _stardewvalley]</li>
+<li>
+<strong>Terraria</strong> [_terraria]</li>
+</ul>
+<h2>
+<a id="-deployment-" class="anchor" href="#-deployment-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><g-emoji class="g-emoji" alias="star2" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f31f.png">🌟</g-emoji> Deployment <g-emoji class="g-emoji" alias="star2" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f31f.png">🌟</g-emoji>
+</h2>
+<p>To start the Discord bot run:</p>
+<div class="highlight highlight-source-batchfile"><pre>python3 main.py</pre></div>
+<h2>
+<a id="-prerequisites" class="anchor" href="#-prerequisites" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><g-emoji class="g-emoji" alias="bulb" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f4a1.png">💡</g-emoji> Prerequisites</h2>
+<ul>
+<li>
+<a href="https://www.python.org/downloads/">Python 3.5</a> or newer version.</li>
+<li>
+<a href="https://pip.pypa.io/en/stable/">pip</a> package manager.</li>
+<li>
+<a href="https://www.google.com/intl/es_mx/chrome/">Google Chrome</a> installed.</li>
+<li>
+<a href="https://chromedriver.chromium.org/downloads">Chrome Webdriver</a> file.</li>
+<li>Discord Application bot <a href="https://discord.com/developers/applications/">token</a>
+<img src="https://user-images.githubusercontent.com/38699812/87493279-0e4f2400-c612-11ea-8a63-f19f867f8810.png" alt="Token">
+</li>
+</ul>
+<h2>
+<a id="-setup" class="anchor" href="#-setup" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><g-emoji class="g-emoji" alias="hammer" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f528.png">🔨</g-emoji> Setup</h2>
+<ul>
+<li>
+<p>Using the package manager <a href="https://pip.pypa.io/en/stable/">pip</a>, install necessary packages running the following command:</p>
+<div class="highlight highlight-source-batchfile"><pre>pip install -r requirements.txt</pre></div>
+</li>
+<li>
+<p>Create .env file with the following variables:</p>
+<div class="highlight highlight-source-python"><pre><span class="pl-v">DISCORD_TOKEN</span> <span class="pl-c1">=</span> <span class="pl-s">"(Bot token registered in Discord App.)"</span>
+<span class="pl-v">CHROMEDRIVER_PATH</span> <span class="pl-c1">=</span> <span class="pl-s">"(PATH of 'webdriver.exe' downloaded)"</span>
+<span class="pl-v">GOOGLE_CHROME_BIN</span> <span class="pl-c1">=</span> <span class="pl-s">"(PATH of Google Chrome ['chrome.exe' file])"</span></pre></div>
+</li>
+</ul>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/diezep/searcher-discord-bot">Searcher Bot</a> is maintained by <a href="https://github.com/diezep">diezep</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
