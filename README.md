@@ -40,5 +40,5 @@ python3 main.py
 - [Google Chrome](https://www.google.com/intl/es_mx/chrome/) installed.
 - [Chrome Webdriver](https://chromedriver.chromium.org/downloads) file.
 - Discord Application bot [token](https://discord.com/developers/applications/)
-    ![Token](https://user-images.githubusercontent.com/38699812/87493279-0e4f2400-c612-11ea-8a63-f19f867f8810.png)
+    -![Token](https://user-images.githubusercontent.com/38699812/87493279-0e4f2400-c612-11ea-8a63-f19f867f8810.png)
 
