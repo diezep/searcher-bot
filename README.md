@@ -8,8 +8,10 @@ This bot help you to **search** things in **wikis of games** like Stardew Valley
 - **Stardew Valley** \[_stardew, _valley, _stardewv, _stardewvalley]
 - **Terraria** \[_terraria]
 
-## Developer
+
+
 ***
+## Developer
 
 ## 🧾 Table of Contents 🧾
 1. [Deployment](#-deployment-)
