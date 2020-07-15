@@ -44,7 +44,7 @@ class StardewValley(commands.Cog):
         embed.url = res.url
 
         image = None
-
+        description = None
 
         if len(res.history) == 1:
             
@@ -56,6 +56,9 @@ class StardewValley(commands.Cog):
             
             title = soup.select_one('#firstHeading').text
             embed.title = title
+
+            embed.description = soup.select_one("#mw-content-text > p:first-of-type").text
+                 
        
         else:
             names_results = ["Results by title of page.. ", "Results by text in page.. "]
@@ -83,4 +86,7 @@ class StardewValley(commands.Cog):
 
                 i_page += 1
 
-        await ctx.send(embed=embed, file=image if image is not None else None)
+        await ctx.send(
+            embed=embed,
+            content=description,
+            file=image)
