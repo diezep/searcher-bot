@@ -1,6 +1,0 @@
-discord.py
-requests
-beautifulsoup4
-python-dotenv
-pillow
-selenium
