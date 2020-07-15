@@ -14,7 +14,7 @@ class Google(commands.Cog):
     page_name = 'Google'
     url = 'https://www.google.com/search?'
     url_param = 'q'
-    embed_image = 'https://i.dlpng.com/static/png/6654190_preview.png'
+    embed_image = 'https://cdn.pixabay.com/photo/2015/12/11/11/43/google-1088004_960_720.png'
 
     def __init__(self, bot, headers):
         self.bot = bot
