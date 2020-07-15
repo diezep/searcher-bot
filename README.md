@@ -30,14 +30,14 @@ Example **response**:
 
 ## 🔎 Searchers 🔎
 - **Google** 
-  - \_google
+  - google
 - **Stardew Valley** 
-  - \_stardew
-  - \_valley
-  - \_stardewv
-  - \_stardewvalley
+  - stardew
+  - valley
+  - stardewv
+  - stardewvalley
 - **Terraria** 
-  - \_terraria
+  - terraria
 
 
 ## 🌟 Deployment 🌟
