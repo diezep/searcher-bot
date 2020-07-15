@@ -18,13 +18,13 @@ This bot help you to **search** things in **wikis of games** like Stardew Valley
 - **Terraria** 
     - \_terraria (what you want search)
 ## 🎈 Example 🎈
-Example discord message:
+Example **discord message**:
 
 ```
-_google hola munndo
+_google discord bot
 ```
 
-Example response:
+Example **response**:
     
 ![image](https://user-images.githubusercontent.com/38699812/87507451-0784d900-c633-11ea-89fa-0def9a651c0b.PNG)
 
