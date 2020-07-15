@@ -1,23 +1,26 @@
 # Searcher Bot
 This bot help you to **search** things in **wikis of games** like Stardew Valley, Terraria or in Google directly from your Discord server.
 
-## 🧾 Table of Contents 🧾
-1. [Searchers Working](#-searchers-working)
-1. [Deployment](#-deployment-)
-1. [Setup](#-setup)
-1. [Prerequisites](#-prerequisites)
+<!-- 1. [Searchers Working](#-searchers-working)-->
 
 ## 🔥 Searchers Working
 - **Google** \[_google]
 - **Stardew Valley** \[_stardew, _valley, _stardewv, _stardewvalley]
 - **Terraria** \[_terraria]
 
+## Developer
+***
+
+## 🧾 Table of Contents 🧾
+1. [Deployment](#-deployment-)
+1. [Prerequisites](#-prerequisites)
+1. [Setup](#-setup)
+
 ## 🌟 Deployment 🌟
 To start the Discord bot run:
 ```cmd
 python3 main.py
 ```
-
 ## 💡 Prerequisites
 - [Python 3.5](https://www.python.org/downloads/) or newer version.
 - [pip](https://pip.pypa.io/en/stable/) package manager.
