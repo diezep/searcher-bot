@@ -10,9 +10,6 @@ This bot help you to **search** things in **wikis of games** like Stardew Valley
 
 
 
-***
-## Developer
-
 ## 🧾 Table of Contents 🧾
 1. [Deployment](#-deployment-)
 1. [Setup](#-setup)
