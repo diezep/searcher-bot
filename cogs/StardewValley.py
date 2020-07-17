@@ -57,14 +57,14 @@ class StardewValley(commands.Cog):
             title = soup.select_one('#firstHeading').text
             embed.title = title
             embed.description = soup.select_one("#mw-content-text > p:first-of-type").text
-                 
+            
        
         else:
             page_results = soup.select("ul.mw-search-results")
 
             if len(page_results) == 0:
-                emmbed.title = "Nothing found. Nothing to show. :("
-                embed.description = f'Your search "{search}" found nothing..'
+                embed.title = "Nothing found. Nothing to show. :("
+                embed.description = f'Your search "{search}" found nothing..\n Check if you have written correctly your search words.'   
             
             else:
                 names_results = ["Results by title of page.. ", "Results by text in page.. "]
