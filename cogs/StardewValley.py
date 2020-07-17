@@ -56,35 +56,40 @@ class StardewValley(commands.Cog):
             
             title = soup.select_one('#firstHeading').text
             embed.title = title
-
             embed.description = soup.select_one("#mw-content-text > p:first-of-type").text
                  
        
         else:
-            names_results = ["Results by title of page.. ", "Results by text in page.. "]
             page_results = soup.select("ul.mw-search-results")
 
-            i_page = 0
-            i_res = 0
-            for page_result in page_results:
+            if len(page_results) == 0:
+                emmbed.title = "Nothing found. Nothing to show. :("
+                embed.description = f'Your search "{search}" found nothing..'
+            
+            else:
+                names_results = ["Results by title of page.. ", "Results by text in page.. "]
 
-                embed.title = names_results[i_page]
+                i_page = 0
+                i_res = 0
+                for page_result in page_results:
 
-                results = page_result.find_all('li')
-                for result in results:
-                    title = result.select_one("div.mw-search-result-heading > a").text
-                    details = result.select_one("div.searchresult").text.replace('{', '').replace('}', '').replace('[', '').replace(']', '')
-                    data = result.select_one("div.mw-search-result-data").text
-                    result_url = self.url + result.select_one("div.mw-search-result-heading > a").attrs['href']
+                    embed.title = names_results[i_page]
 
-                    embed.add_field(name=title, value=f"{details} \n{result_url} \n{data}", inline=False)
-                    i_res += 1
+                    results = page_result.find_all('li')
+                    for result in results:
+                        title = result.select_one("div.mw-search-result-heading > a").text
+                        details = result.select_one("div.searchresult").text.replace('{', '').replace('}', '').replace('[', '').replace(']', '')
+                        data = result.select_one("div.mw-search-result-data").text
+                        result_url = self.url + result.select_one("div.mw-search-result-heading > a").attrs['href']
 
-                    # Show only 5 results in both result pages.
-                    if i_res == 5 or i_res == 10:
-                        break
+                        embed.add_field(name=title, value=f"{details} \n{result_url} \n{data}", inline=False)
+                        i_res += 1
 
-                i_page += 1
+                        # Show only 5 results in both result pages.
+                        if i_res == 5 or i_res == 10:
+                            break
+
+                    i_page += 1
 
         await ctx.send(
             embed=embed,
