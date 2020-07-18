@@ -68,3 +68,10 @@ python3 main.py
 
 ![Token](https://user-images.githubusercontent.com/38699812/87493279-0e4f2400-c612-11ea-8a63-f19f867f8810.png)
 
+<<<<<<< HEAD
+=======
+## Searchers
+- Google [_google]
+- Stardew Valley [_stardewv] [Only search list]
+- Terraria [_terraria] [Only search list]
+>>>>>>> 663e98cfee8056f46d3a91cc5282e2833ed5f966
