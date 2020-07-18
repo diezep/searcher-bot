@@ -35,32 +35,44 @@ class Terraria(commands.Cog):
         soup = BeautifulSoup(html_content, 'html.parser')
 
         embed = discord.Embed(
-            title=f"{self.page_name} [Search Bot]",
-            description=f'Search "{search}" in Terraria Wiki.',
             timestamp=datetime.datetime.utcnow(),
             color=discord.Color.dark_blue(),
             url=url_query
         )
         embed.set_thumbnail(url=self.embed_image)
-
-        results = soup.select('ul.Results > li[class="result"]')
-        i = 0
-        for result in results:
-
-            tittle = result.select_one("h1 > a").text
+        embed.set_author(f"{self.page_name} [Search Bot]")
+       
+        first_result = soup.select_one('h1 > a').text
+        if compare_strings(search, first_result):
 
             _url = result.select_one("ul > li > a").attrs["href"]
+            results = soup.select('ul.Results > li[class="result"]')
+        
+        else:
 
-            result.h1.decompose()
-            result.ul.decompose()
-            details = result.article.get_text().replace('\n', '').replace('\t', '')
+            
+            embed.title=f"Search results for {search}",
+            embed.description=f'Search "{search}" in Terraria Wiki.',
+            i = 0
 
-            embed.add_field(name = tittle, value = f"{details} \n{_url}", inline = False)
+            # Load list of results
+            for result in results:
 
-            # Show only first 5 options.
-            i += 1
+                title = result.select_one("h1 > a").text
+                _url = result.select_one("ul > li > a").attrs["href"]
 
-            if i == 5:
-                break
+                result.h1.decompose()
+                result.ul.decompose()
+                details = result.article.get_text().replace('\n', '').replace('\t', '')
 
+                embed.add_field(name = title, value = f"{details} \n{_url}", inline = False)
+
+                # Show only first 5 options.
+                i += 1
+
+                if i == 5:
+                    break
+            
+            #
+            
         await ctx.send(embed=embed)
