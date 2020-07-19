@@ -52,26 +52,28 @@ class Terraria(commands.Cog):
             _html_content = _res.content
 
             _soup = BeautifulSoup(_html_content, 'html.parser')
-            
+
+            embed.url = _res.url
+
             title = _soup.find("h1", attrs={"class":"page-header__title"}).text
             description = _soup.select_one("#mw-content-text > p:first-of-type").text
 
-            # embed.title = title
-            # embed.description = description
+            embed.title = title
+            embed.description = description
 
-            if len(_soup.select(".portable-infobox")):
+            if len(_soup.select("#mw-content-text > aside")) > 0 :
                 webss = WebSS(url=_res.url)
-                image = webss.ofElement('//*[@class="portable-infobox"]')
+                image = webss.ofElement('//*[@id="mw-content-text"]/aside/figure/a/img')
                 embed.set_image(url="attachment://image.png")
                 webss.close()
 
         else:
 
             embed.url = url_query
-            embed.title=f"Search results for {search}",
-            embed.description=f'Search "{search}" in Terraria Wiki.',
+            embed.title=f"Search results for {search}"
+            embed.description=f'Search "{search}" in Terraria Wiki.'
             i = 0
-            results =  soup.select('ul.Results > li[class="result > article"]')
+            results =  soup.select('ul.Results > li[class="result"]')
             # Load list of results
             for result in results:
 
