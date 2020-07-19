@@ -7,6 +7,8 @@ from bs4 import BeautifulSoup
 from discord.ext import commands
 
 from utils.log import print_log
+from utils.strings import compare_strings
+from utils.webss import WebSS
 
 
 class Terraria(commands.Cog):
@@ -19,7 +21,7 @@ class Terraria(commands.Cog):
     def __init__(self, bot, headers):
         self.bot = bot
         self.headers = headers
-
+    
     @commands.command()
     async def terraria(self, ctx, *, search):
 
@@ -37,24 +39,39 @@ class Terraria(commands.Cog):
         embed = discord.Embed(
             timestamp=datetime.datetime.utcnow(),
             color=discord.Color.dark_blue(),
-            url=url_query
         )
         embed.set_thumbnail(url=self.embed_image)
-        embed.set_author(f"{self.page_name} [Search Bot]")
+        embed.set_author(name = f"{self.page_name} [Search Bot]")
        
-        first_result = soup.select_one('h1 > a').text
+        first_result = soup.select_one('a.result-link').text
+        image = None
         if compare_strings(search, first_result):
 
-            _url = result.select_one("ul > li > a").attrs["href"]
-            results = soup.select('ul.Results > li[class="result"]')
-        
+            _url = soup.select_one("a.result-link").attrs["href"]
+            _res = requests.get(_url, headers = self.headers, allow_redirects = True)
+            _html_content = _res.content
+
+            _soup = BeautifulSoup(_html_content, 'html.parser')
+            
+            title = _soup.find("h1", attrs={"class":"page-header__title"}).text
+            description = _soup.select_one("#mw-content-text > p:first-of-type").text
+
+            # embed.title = title
+            # embed.description = description
+
+            if len(_soup.select(".portable-infobox")):
+                webss = WebSS(url=_res.url)
+                image = webss.ofElement('//*[@class="portable-infobox"]')
+                embed.set_image(url="attachment://image.png")
+                webss.close()
+
         else:
 
-            
+            embed.url = url_query
             embed.title=f"Search results for {search}",
             embed.description=f'Search "{search}" in Terraria Wiki.',
             i = 0
-
+            results =  soup.select('ul.Results > li[class="result > article"]')
             # Load list of results
             for result in results:
 
@@ -73,6 +90,4 @@ class Terraria(commands.Cog):
                 if i == 5:
                     break
             
-            #
-            
-        await ctx.send(embed=embed)
+        await ctx.send(embed=embed, file=image)

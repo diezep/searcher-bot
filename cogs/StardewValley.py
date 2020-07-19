@@ -44,7 +44,6 @@ class StardewValley(commands.Cog):
         embed.url = res.url
 
         image = None
-        description = None
 
         if len(res.history) == 1:
             
@@ -56,7 +55,9 @@ class StardewValley(commands.Cog):
             
             title = soup.select_one('#firstHeading').text
             embed.title = title
-            embed.description = soup.select_one("#mw-content-text > p:first-of-type").text
+
+            description = soup.select_one("#mw-content-text > p:first-of-type").text
+            embed.description = description
             
        
         else:
@@ -93,5 +94,4 @@ class StardewValley(commands.Cog):
 
         await ctx.send(
             embed=embed,
-            content=description,
             file=image)
