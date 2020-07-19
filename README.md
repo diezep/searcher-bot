@@ -39,6 +39,7 @@ Example **response**:
 - **Terraria** 
   - terraria
 - **Minecraft** 
+  - minecraft 
   - mc
 
 
