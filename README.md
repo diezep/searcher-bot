@@ -14,6 +14,8 @@
     - \_stardew (what you want search) [show 1-5 result] 
 - **Terraria** 
     - \_terraria (what you want search)
+- **Minecraft** 
+    - \_minecraft (what you want search)
 ## 🎈 Example 🎈
 Example **discord message**:
 
@@ -35,6 +37,9 @@ Example **response**:
   - stardewvalley
 - **Terraria** 
   - terraria
+- **Minecraft** 
+  - minecraft 
+  - mc
 
 
 ## 🌟 Deployment 🌟
@@ -71,4 +76,5 @@ python3 main.py
 - Google [_google]
 - Stardew Valley [_stardewv] [Only search list]
 - Terraria [_terraria] [Only search list]
+- Minecraft [_minecraft] [Only search list]
 >>>>>>> 663e98cfee8056f46d3a91cc5282e2833ed5f966

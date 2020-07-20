@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 from cogs.Google import Google
 from cogs.StardewValley import StardewValley
 from cogs.Terraria import Terraria
+from cogs.Minecraft import Minecraft
 
 print("-- Initializing variables --")
 load_dotenv()
@@ -41,6 +42,9 @@ bot.add_cog(StardewValley(bot, headers))
 
 # Terraria command and functions.
 bot.add_cog(Terraria(bot, headers))
+
+# Minecraft command and functions.
+bot.add_cog(Minecraft(bot, headers))
 
 token = os.environ.get("DISCORD_TOKEN")
 bot.run(token)
