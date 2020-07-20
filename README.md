@@ -1,6 +1,3 @@
-# Searcher Bot
-This bot help you to **search** things in **wikis of games** like Stardew Valley, Terraria or in Google directly from your Discord server.
-
 ## 🧾 Table of Contents 🧾
 
 1. [Usage](#-usage-)
