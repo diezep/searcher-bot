@@ -44,7 +44,7 @@ class Minecraft(commands.Cog):
         embed.url = res.url
 
         image = None
-
+        
         if len(res.history) == 1:
             
             if len(soup.select('.notaninfobox')) == 1:
@@ -55,10 +55,14 @@ class Minecraft(commands.Cog):
             
             title = soup.select_one('#firstHeading').text
             embed.title = title
-
-            description = soup.select_one("#mw-content-text > p:first-of-type").text
+            description = soup.select_one("#mw-content-text > .mw-parser-output > p:first-of-type").text
+            while True:
+                if len(description) == 0 :
+                    soup.select_one("#mw-content-text > .mw-parser-output > p:first-of-type").decompose()
+                else:
+                    description = soup.select_one("#mw-content-text > .mw-parser-output > p:first-of-type").text
+                    break
             embed.description = description
-
         else:
             results = soup.select("li.mw-search-result")
 
