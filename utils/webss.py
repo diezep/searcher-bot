@@ -6,6 +6,7 @@ from PIL import Image
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 
+from webdriver_manager.chrome import ChromeDriverManager
 
 class WebSS():
 
@@ -20,7 +21,7 @@ class WebSS():
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--start-fullscreen")
 
-        self.driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+        self.driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=chrome_options)
         self.driver.set_window_size(2048, 1365)
 
     def ofElement(self, xpath):
