@@ -57,7 +57,7 @@ python3 main.py
 - Create .env file with the following variables:
   ```python
   DISCORD_TOKEN = "(Bot token registered in Discord App.)"
-  CHROMEDRIVER_PATH = "(PATH of 'webdriver.exe' downloaded)"
+  ~~CHROMEDRIVER_PATH = "(PATH of 'webdriver.exe' downloaded)"~~
   GOOGLE_CHROME_BIN = "(PATH of Google Chrome ['chrome.exe' file])"
     ```
 
@@ -65,16 +65,8 @@ python3 main.py
 - [Python 3.5](https://www.python.org/downloads/) or newer version.
 - [pip](https://pip.pypa.io/en/stable/) package manager.
 - [Google Chrome](https://www.google.com/intl/es_mx/chrome/) installed.
-- [Chrome Webdriver](https://chromedriver.chromium.org/downloads) file.
+- ~~[Chrome Webdriver](https://chromedriver.chromium.org/downloads) file.~~
 - Discord Application bot [token](https://discord.com/developers/applications/)
 
 ![Token](https://user-images.githubusercontent.com/38699812/87493279-0e4f2400-c612-11ea-8a63-f19f867f8810.png)
 
-<<<<<<< HEAD
-=======
-## Searchers
-- Google [_google]
-- Stardew Valley [_stardewv] [Only search list]
-- Terraria [_terraria] [Only search list]
-- Minecraft [_minecraft] [Only search list]
->>>>>>> 663e98cfee8056f46d3a91cc5282e2833ed5f966
