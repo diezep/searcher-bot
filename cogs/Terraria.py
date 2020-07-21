@@ -22,7 +22,7 @@ class Terraria(commands.Cog):
         self.bot = bot
         self.headers = headers
     
-    @commands.command()
+    @commands.command(aliases="Terraria")
     async def terraria(self, ctx, *, search):
 
         await ctx.send(f'Searching in {self.page_name} for: {search}...')

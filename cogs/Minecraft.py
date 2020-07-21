@@ -20,7 +20,7 @@ class Minecraft(commands.Cog):
         self.bot = bot
         self.headers = headers
 
-    @commands.command(aliases=['mc'])
+    @commands.command(aliases=['mc', 'minecraft'])
     async def Minecraft(self, ctx, *, search):
 
         await ctx.send(f'Searching in {self.page_name} for: {search}...')
