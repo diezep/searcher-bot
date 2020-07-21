@@ -57,7 +57,7 @@ python3 main.py
 - Create .env file with the following variables:
   ```python
   DISCORD_TOKEN = "(Bot token registered in Discord App.)"
-  ~~CHROMEDRIVER_PATH = "(PATH of 'webdriver.exe' downloaded)"~~
+  #CHROMEDRIVER_PATH = "(PATH of 'webdriver.exe' downloaded)"
   GOOGLE_CHROME_BIN = "(PATH of Google Chrome ['chrome.exe' file])"
     ```
 
