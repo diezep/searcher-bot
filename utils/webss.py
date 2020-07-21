@@ -21,11 +21,11 @@ class WebSS():
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--start-fullscreen")
 
-        self.driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=chrome_options)
+        self.driver = webdriver.Chrome(ChromeDriverManager(log_level=0).install(), chrome_options=chrome_options)
         self.driver.set_window_size(2048, 1365)
 
     def ofElement(self, xpath):
-
+        print(" Getting screenshot..")
         self.driver.get(self.url)
         
         ActionChains(self.driver).move_to_element(self.driver.find_element_by_xpath(xpath)).perform()
@@ -36,4 +36,5 @@ class WebSS():
         return file
 
     def close(self):
+        print("Getting screenshot successfully..")
         self.driver.close()
