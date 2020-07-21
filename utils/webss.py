@@ -20,8 +20,10 @@ class WebSS():
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--start-fullscreen")
-
-        self.driver = webdriver.Chrome(ChromeDriverManager(log_level=0).install(), chrome_options=chrome_options)
+        
+        os.environ['WDM_LOG_LEVEL'] = '0'
+        
+        self.driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=chrome_options)
         self.driver.set_window_size(2048, 1365)
 
     def ofElement(self, xpath):
