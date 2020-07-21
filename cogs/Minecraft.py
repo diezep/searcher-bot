@@ -57,10 +57,10 @@ class Minecraft(commands.Cog):
             embed.title = title
             description = soup.select_one("#mw-content-text > .mw-parser-output > p:first-of-type").text
             while True:
-                if len(description) == 0 :
-                    soup.select_one("#mw-content-text > .mw-parser-output > p:first-of-type").decompose()
-                else:
+                if len(description) < 10 :
+                    soup.select_one("#mw-content-text > .mw-parser-output > p:first-of-type").unwrap()
                     description = soup.select_one("#mw-content-text > .mw-parser-output > p:first-of-type").text
+                else:
                     break
             embed.description = description
         else:
