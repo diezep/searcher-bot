@@ -1,3 +1,7 @@
+# Searcher Discord Bot
+![header searcher-bot](https://user-images.githubusercontent.com/38699812/89093246-277c0280-d37e-11ea-98dd-22189e38088b.png)
+
+
 ## 🧾 Table of Contents 🧾
 
 1. [Usage](#-usage-)
